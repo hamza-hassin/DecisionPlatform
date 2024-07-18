@@ -23,6 +23,35 @@ model User {
   updatedAt DateTime  @default(now()) @updatedAt
 
   @@map("user")
+  proposal proposal[]
+}
+
+model proposal{
+  id        Int       @id @default(autoincrement())
+  title     String
+  description  String 
+  author User @relation(fields: [userId], references: [id])
+  userId Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deadline DateTime 
+
+  @@map("proposal")
+
+  option option[] 
+}
+
+model option{
+  id        Int       @id @default(autoincrement())
+  description  String 
+  proposal proposal @relation(fields: [proposalId], references: [id])
+  proposalId Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  attachment String 
+
+  @@map("option")
+
 }
 
 enum Role {
